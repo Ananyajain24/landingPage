@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation and Deployment Guide</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      display: flex;
+      height: 100vh;
+      background-color: #fff;
+      color: #000;
+    }
+
+    /* Layout */
+    .sidebar {
+      width: 240px; /* Increased width */
+      margin-right: 20px; /* Added left margin */
+      background-color: #880808;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .main-content {
+      margin-left: 260px; /* Adjusted for increased sidebar width and margin */
+      padding: 2rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    /* Sidebar Styling */
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar ul li a {
+      color: #ffcccc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background-color: #660606;
+    }
+
+    /* Main Content Styling */
+    .main-content h1 {
+      font-size: 2.5rem;
+      color: #000;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .main-content h2 {
+      font-size: 2rem;
+      color: #000;
+      margin-top: 2rem;
+    }
+
+    .main-content p {
+      color: #000;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .main-content ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .main-content ul li {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-content pre {
+      background-color: #f5f5f5;
+      color: #000;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main-content {
+        margin: 0;
+        padding: 1rem;
+      }
+    }
+
+    /* Navbar with Logo */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: white;
+      display: flex;
+      align-items: center; /* Vertically center content */
+      padding: 0 1rem;
+      z-index: 1000;
+    }
+    .sidebar{
+        background-color: #880808;
+    }
+
+    .navbar .logo {
+      height: 40px;
+      margin-right: 15px; /* Space between logo and title */
+    }
+
+    .navbar .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000; /* Set title color to black */
+      margin: 0;
+      flex-grow: 1; /* Push title to the center */
+      text-align: center; /* Center title */
+      background-color: transparent; /* Remove background color */
+    }
+
+    /* Padding below the navbar */
+    .main-content {
+      padding-top: 70px;
+    }
+
+  </style>
+</head>
+<body>
+    <div class="navbar">
+      <img src="logo.png" alt="Logo" class="logo">
+      <span class="title"><h1>Installation and Deployment Guide</h1></span>
+    </div>
+  
+    <div class="sidebar">
+      <h2>Guide Navigation</h2>
+      <ul>
+        <li><a href="#prerequisites">Step 1: Prerequisites</a></li>
+        <li><a href="#fastapi">Step 2: FastAPI Backend</a></li>
+        <li><a href="#applicationlayer">Step 3: Application LAyer</a></li>
+        <li><a href="#database">Step 4: Database Layer</a></li>
+        <li><a href="#nginx">Step 5: NGINX</a></li>
+        <li><a href="#deploying">Step 6: Deploying</a></li>
+      </ul>
+    </div>
+  
+    <div class="main-content">
+      <section id="prerequisites">
+        <h2>Step 1: Prerequisites</h2>
+        <p> <strong>Hardware Requirements</strong></p>
+        <ul>
+            <li> RAM - 4GB</li>
+            <li> CPU - Intel 2.80 GHz, 2P </li>
+            <li> Space - 8-10 GB </li>
+        </ul>
+        <p><strong>Before proceeding, ensure your system meets the following requirements:</strong></p>
+        <ul>
+          <li>
+            <strong>Install Python (3.8 or above):</strong>
+            <ol>
+              <li>Open your browser and go to the <a href="https://www.python.org/downloads/" target="_blank">Python downloads page</a>.</li>
+              <li>Click on the <strong>Download Python 3.x.x</strong> button.</li>
+              <li>Run the downloaded installer:
+                <ul>
+                  <li><strong>Windows:</strong> Double-click the .exe file, check the box <em>Add Python to PATH</em>, and click <em>Install Now</em>.</li>
+                  <li><strong>Linux/macOS:</strong> Use your package manager:
+                    <pre><code>sudo apt update</code></pre>
+                    <pre><code>sudo apt install python3 python3-pip</code></pre>
+                  </li>
+                </ul>
+              </li>
+              <li>Verify installation:
+                <pre><code>python3 --version</code></pre>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <strong>Install Node.js (16 or above):</strong>
+            <ol>
+              <li>Visit the <a href="https://nodejs.org/" target="_blank">Node.js official site</a>.</li>
+              <li>Click <em>LTS (Recommended for most users)</em>.</li>
+              <li>Run the installer and follow the setup wizard.</li>
+              <li>Verify installation:
+                <pre><code>node --version</code></pre>
+                <pre><code> npm --version</code></pre>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <strong>Install NGINX:</strong>
+            <ul>
+              <li><strong>Linux:</strong> Open your terminal and run:
+                <pre><code>sudo apt update</code></pre>
+                <pre><code>sudo apt install nginx</code></pre>
+              </li>
+              <li><strong>macOS:</strong> Use Homebrew:
+                <pre><code>brew install nginx</code></pre>
+              </li>
+              <li><strong>Windows:</strong> Follow the <a href="https://nginx.org/en/download.html" target="_blank">NGINX installation guide</a>.</li>
+              <li>Start NGINX:
+                <pre><code>sudo service nginx start</code></pre>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Install Database Server:</strong>
+            <ul>
+              <li>Use PostgreSQL as your database server. Follow the <a href="https://www.postgresql.org/download/" target="_blank">PostgreSQL installation guide</a>.</li>
+              <li>Verify installation:
+                <pre><code>psql --version</code></pre>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Set Up VPN Access:</strong>
+            <ul>
+              <li>Use a service like OpenVPN. Download the client and follow the configuration instructions provided by your VPN administrator.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+  
+      <section id="fastapi">
+        <h2>Step 2: Setting up FastAPI Backend</h2>
+        <pre>
+  1. Clone the repository:
+     <code style="color: blue; font-weight: bold;">git clone &lt;backend-repository-url&gt;</code>
+  2. Navigate to the backend directory:
+     <code style="color: blue; font-weight: bold;">cd backend</code>
+  3. Create a virtual environment:
+     <code style="color: blue; font-weight: bold;">python -m venv venv</code>
+  4. Activate the environment and install dependencies:
+     <code style="color: blue; font-weight: bold;">source venv/bin/activate</code> (Linux/macOS)
+     <code style="color: blue; font-weight: bold;">venv\Scripts\activate</code> (Windows)
+     <code style="color: blue; font-weight: bold;">pip install -r requirements.txt</code>
+  5. Run the FastAPI server:
+     <code style="color: blue; font-weight: bold;">uvicorn main:app --host 127.0.0.1 --port 8000</code>
+        </pre>
+  </section>
+  
+  <section id="application-layer">
+    <h2>Step 3: Setting up Application Layer</h2>
+    <pre>
+1. Clone the Application Layer repository:
+ <code style="color: blue; font-weight: bold;">git clone &lt;application-repository-url&gt;</code>
+2. Navigate to the application directory:
+ <code style="color: blue; font-weight: bold;">cd application-layer</code>
+3. Install dependencies:
+ <code style="color: blue; font-weight: bold;">npm install</code>
+4. Start the application:
+ <code style="color: blue; font-weight: bold;">npm start</code>
+5. Ensure the application is running at the specified port.
+    </pre>
+  </section>
+
+  <section id="database-layer">
+    <h2>Step 4: Setting up Database Layer</h2>
+    <pre>
+1. Clone the Database Layer repository:
+ <code style="color: blue; font-weight: bold;">git clone &lt;database-repository-url&gt;</code>
+2. Navigate to the database directory:
+ <code style="color: blue; font-weight: bold;">cd database-layer</code>
+3. Set up the database:
+ <code style="color: blue; font-weight: bold;">psql -U &lt;username&gt; -d &lt;database-name&gt; -f schema.sql</code>
+4. Populate initial data (if required):
+ <code style="color: blue; font-weight: bold;">psql -U &lt;username&gt; -d &lt;database-name&gt; -f seed.sql</code>
+5. Verify the database is running and accessible.
+    </pre>
+  </section>
+  
+  <section id="nginx">
+        <h2>Step 5: Configuring NGINX</h2>
+        <pre>
+  1. Install and start NGINX:
+     <code style="color: blue; font-weight: bold;">sudo apt install nginx</code>
+     <code style="color: blue; font-weight: bold;">sudo service nginx start</code>
+  2. Configure NGINX for reverse proxy:
+     Edit /etc/nginx/sites-available/default and add:
+     <code style="color: blue; font-weight: bold;">server {</code>
+     <code style="color: blue; font-weight: bold;">   listen 80;</code>
+     <code style="color: blue; font-weight: bold;">   server_name localhost;</code>
+     <code style="color: blue; font-weight: bold;">   location / {</code>
+     <code style="color: blue; font-weight: bold;">       proxy_pass http://127.0.0.1:8000;</code>
+     <code style="color: blue; font-weight: bold;">       proxy_set_header Host $host;</code>
+     <code style="color: blue; font-weight: bold;">       proxy_set_header X-Real-IP $remote_addr;</code>
+     <code style="color: blue; font-weight: bold;">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</code>
+     <code style="color: blue; font-weight: bold;">   }</code>
+     <code style="color: blue; font-weight: bold;">}</code>
+  3. Test and reload configuration:
+     <code style="color: blue; font-weight: bold;">sudo nginx -t</code>
+     <code style="color: blue; font-weight: bold;">sudo service nginx reload</code>
+        </pre>
+  </section>
+  
+  <section id="deploying">
+        <h2>Step 6: Deploying and Testing</h2>
+        <pre>
+  1. Deploy the backend as a service:
+     Create /etc/systemd/system/fastapi.service with:
+     <code>[Unit]</code>
+     <code style="color: blue; font-weight: bold;">Description=FastAPI Application</code>
+     <code>[Service]</code>
+     <code style="color: blue; font-weight: bold;">User=your-username</code>
+     <code style="color: blue; font-weight: bold;">Group=your-group</code>
+     <code style="color: blue; font-weight: bold;">WorkingDirectory=/path/to/backend</code>
+     <code style="color: blue; font-weight: bold;">ExecStart=/path/to/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000</code>
+     <code>[Install]</code>
+     <code style="color: blue; font-weight: bold;">WantedBy=multi-user.target</code>
+  2. Enable and start the service:
+     <code style="color: blue; font-weight: bold;">sudo systemctl enable fastapi</code>
+  3. Test both web and desktop apps.
+        </pre>
+  </section>
+  
+  
+    </div>
+  </body>
+  
+</html>
